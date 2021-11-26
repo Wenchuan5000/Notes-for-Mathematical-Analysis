@@ -6,7 +6,6 @@
 \section{Metric Spaces}
 %--------------------------------------------
 
-
 \begin{definition}
 	\label{def: metric space}
 	Let $X$ be any non-empty set. A \textit{metric on $X$} is a mapping $\rho: X  \times X \to \mathbb R_{\ge 0}$ which satisfies the \textit{metric axioms}. That is, for any $x, y, z \in X$,
@@ -27,6 +26,13 @@
 	The ordered pair $(X, \rho)$ is called a \textit{metric space}.
 \end{definition}
 
+
+\begin{example}
+	Let $\rho: \mathbb R^n \times \mathbb R^n \to \mathbb R_{>0}$ be defined as
+	$$
+	\rho(x,y) := \left( \sum_{i = 1}^n |\mathbf x - \mathbf y|^p \right)^\frac{1}{p}
+	$$
+\end{example}
 
 
 \section{Open Sets}
