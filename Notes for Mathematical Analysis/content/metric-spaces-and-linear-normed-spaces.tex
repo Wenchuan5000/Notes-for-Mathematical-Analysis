@@ -8,31 +8,59 @@
 
 \begin{definition}
 	\label{def: metric space}
-	Let $X$ be any non-empty set. A \textit{metric on $X$} is a mapping $\rho: X  \times X \to \mathbb R_{\ge 0}$ which satisfies the \textit{metric axioms}. That is, for any $x, y, z \in X$,
-	\begin{enumerate}[M1.]
+	Let $X$ be any non-empty set. A \textit{metric on $X$} is a mapping $d: X  \times X \to \mathbb R_{\ge 0}$ which satisfies the \textit{Metric Axioms}. That is, for any $x, y, z \in X$,
+	\begin{enumerate}
 		\item
-		\label{def: metric space: identity of indiscernibles}
-		$\rho(x,y) = 0$ iff $x = y$;
+		\label{def: metric axioms: identity of indiscernibles}
+		$d(x,y) = 0$ iff $x = y$;
 		
 		\item
-		\label{def: metric space: symmetry}
-		$\rho(x,y) = \rho(y, x)$;
+		\label{def: metric axioms: symmetry}
+		$d(x,y) = d(y, x)$;
 		
 		\item
-		\label{def: triangle inequality}
-		$\rho(x,y) \le \rho(x, z) + \rho(z, y)$.
+		\label{def: metric axioms: triangle inequality}
+		$d(x,y) \le d(x, z) + d(z, y)$.
 	\end{enumerate}
 	
-	The ordered pair $(X, \rho)$ is called a \textit{metric space}.
+	The ordered pair $(X, d)$ is called a \textit{metric space}.
 \end{definition}
 
 
 \begin{example}
-	Let $\rho: \mathbb R^n \times \mathbb R^n \to \mathbb R_{>0}$ be defined as
+	\label{eg: lebesgue metric}
+	
+	Given $p \in \overline{\mathbb R}_{> 0}$ (we denote $\overline{\mathbb R}$ for $\mathbb R \cup \{ \pm \infty \}$), let $d_p: \mathbb R^n \times \mathbb R^n \to \mathbb R_{>0}$ ($n \in \mathbb N_{> 0}$) be defined as
 	$$
-	\rho(x,y) := \left( \sum_{i = 1}^n |\mathbf x - \mathbf y|^p \right)^\frac{1}{p}
+	d_p(\mathbf x, \mathbf y) := \left( \sum_{i = 1}^n | x_i - y_i|^p \right)^\frac{1}{p},
+	$$
+	then $d_p$ is a \textit{$L^p$ metric} (named after Henri Lebesgue) on $X$.
+	
+	The \textit{Euclidean metric} on $\mathbb R^n$ is the case as $k = 2$, i.e., $d_p$ is a $L^2$ metric on $X$.
+	
+	In the case of $L^\infty$, we have
+	$$
+	d_{\infty} = \max_{i \in \{1, \ldots, n\}} |x_i - y_i|.
 	$$
 \end{example}
+
+
+\begin{example}
+	\label{eg: discrete metric}
+	Let $\mathbb X = (X, d)$ be a metric space, where $X$ is a non-empty set, and the metric $d: X \times X \to \mathbb R_{> 0}$ is defined as
+	$$
+	d(x,y) :=
+	\begin{cases}
+		0, & \text{if $x = y$}; \\
+		1, & \text{else}.
+	\end{cases}
+	$$
+	
+	$d$ is called a \textit{discrete metric} on $X$.
+\end{example}
+
+
+% todo: Q: do i need more eg here?
 
 
 \section{Open Sets}
@@ -40,5 +68,184 @@
 
 
 \begin{definition}
-	Let $\mathbb X = (X, \rho)$ be a metric space. A set $A \subseteq X$ is said to be \textit{open} iff
+	\label{def: open balls}
+	
+	Let $\mathbb X = (X, d)$ be a metric space
+	
+	Given $x \in X$ and $\varepsilon \in \mathbb R_{> 0}$.
+	
+	An \textit{$\varepsilon$-ball} of $x$, denoted by $B(x, \varepsilon)$, is a set defined as
+	$$
+	B(x, \varepsilon) := \left\{ y \in X : d(x,y) < \varepsilon \right\}.
+	$$
 \end{definition}
+
+
+\begin{note}
+	\label{note: open balls: notation}
+	If there are many metric spaces $\mathbb X = (X, d_\mathbb X)$, $\mathbb Y = (Y, d_\mathbb Y)$, $\mathbb M = (M, d_\mathbb X)$, $\ldots,$ we use the subscript
+	$$
+	B_{\mathbb X}(x , \varepsilon) \text{ or } B_{d_\mathbb X} (x, \varepsilon)
+	$$
+	to mention that in which space or under which metric an open ball is defined.
+\end{note}
+
+
+\begin{definition}
+	\label{def: open sets}
+	A set $A \subseteq X$ is said to be \textit{open in $\mathbb X$} iff for any $x \in A$, there exists $\varepsilon \in \mathbb R^{> 0}$, such that
+	$$
+	B(x, \varepsilon) \subseteq A.
+	$$
+\end{definition}
+
+
+\begin{lemma}
+	\label{lm: open balls are open} For any $x \in X$ and any $\varepsilon \in \mathbb R_{>0}$, $B(x, \varepsilon)$ is open in $\mathbb X$.
+	
+	\begin{proof}
+		For any $y \in B(x, \varepsilon)$, by Definition \ref{def: open balls}, $d(x,y) < \varepsilon$.
+		
+		Let $r = \varepsilon - d(x,y)$. For any $z \in B(y, r)$, $d(y, z) < r$. Then, by Open Axiom \ref{def: metric axioms: triangle inequality},
+		$$
+		d(x,z) \le d(x, y) + d(y,z) \le \varepsilon - r + r = \varepsilon.
+		$$
+		Thus, $z \in B(x, \varepsilon)$. As $z$ is arbitrarily picked from $B(y, r)$, we have $B(y, r) \subseteq B(x, \varepsilon)$. By Definition \ref{def: open sets}, $B(x, \varepsilon)$ is open in $\mathbb X$.
+	\end{proof}
+\end{lemma}
+
+
+
+\begin{theorem}
+	\label{thm: open set axioms}
+	Let $\mathcal T \subseteq 2^X$ be the set of all open subsets of $X$, then $\mathcal T$ satisfies the \textit{Open Set Axioms}. That is,
+	\begin{enumerate}
+		\item
+		\label{thm: open set axioms: necessary elements}
+		$\emptyset , X \in \mathcal T$;
+		
+		\item
+		\label{thm: open set axioms: closed under arbitrary intersection}
+		for any $\mathcal U \subseteq \mathcal T$, $\bigcup \mathcal U \in \mathcal T$;
+		
+		\item
+		\label{thm: open set axioms: closed under finite intersection}
+		for any finite $\mathcal F \subseteq \mathcal T$, $\bigcap \mathcal F \in \mathcal T$.
+	\end{enumerate}
+	
+	\begin{proof} \
+		\begin{enumerate}
+			\item
+			 For any $x \in X$ and any $\varepsilon \in \mathbb R_{> 0}$, by Definition \ref{def: open balls}, $B(x, \varepsilon) \subseteq X$. Thus $X \in \mathcal T$. It is vacuously true that $\emptyset \in \mathcal T$.
+			 \qedlm
+			 
+			 \item
+			 Let $\mathcal U \subseteq \mathcal T$. For any $x \in \bigcup \mathcal U$, there exists $U \in \mathcal U$ such that $x \in U$. As $U \in \mathcal T$, there there exists $\varepsilon \in \mathbb R_{> 0}$, such that $B(x, \varepsilon) \subseteq U$. As $U \subseteq \bigcup \mathcal U$, $B \subseteq \bigcup \mathcal U$.
+			 \qedlm
+			 
+			 \item
+			 Let $A, B \in \mathcal T$, and let $x \in A \cap B$. As $A \in \mathcal T$, there exists $\varepsilon_A \in \mathbb R_{> 0}$ such that $B(x, \varepsilon_A ) \subseteq A$; similarly, there exists $\varepsilon_B \in \mathbb R_{> 0}$ such that $B(x, \varepsilon_B) \subseteq B$.
+			 
+			 Now, suppose $\varepsilon_A \le \varepsilon_B$. For any $y \in B(x, \varepsilon_A)$, as
+			 $$
+			 d(x,y) < \varepsilon_B \le \varepsilon_B,
+			 $$
+			 by Definition \ref{def: open balls}, $y \in B(x, \varepsilon_A) \subseteq B(x, \varepsilon_B)$. Now, we have $y \in A \cap B$.
+			 
+			 As $y \in B(x, \varepsilon_A)$ is arbitrarily given, $A \cap B \in \mathcal T$.
+			 
+			 By deduction, for any finite $\mathcal F \subseteq \mathcal T$, $\bigcap \mathcal F \in \mathcal T$.
+		\end{enumerate}
+	\end{proof}
+\end{theorem}
+
+
+\begin{theorem}
+	\label{thm: topology might not close under infinite intersection}
+	$\mathcal T$ is not necessarily closed under infinite intersection.
+	
+	\begin{proof}
+		Seeking a counter-example, let $(\mathbb R, d)$ be a Euclidean metric space. Let
+		$$
+		\mathcal U = \left\{ \left( -\frac{1}{n}, \frac{1}{n} \right) : n \in \mathbb N_{>0} \right\}.
+		$$
+		
+		For any $U \in \mathcal U$, $U \in \mathcal T$. But for any $n \in \mathbb N_{> 0}$, there exists $N \in \mathbb N_{> n}$, such that
+		$$
+		\left( -\frac{1}{N}, \frac{1}{N} \right) \subsetneq \left( -\frac{1}{n}, \frac{1}{n} \right).
+		$$
+		Thus, for any $\bigcap \mathcal U = \{0\}$. By Definition \ref{def: open sets}, $\{0\}$ is not open in $\mathbb X$.
+	\end{proof}
+\end{theorem}
+
+
+
+\begin{corollary}
+	\label{cor: open sets: only if union of open}
+	A subset $A \subseteq X$ is open only if there exists a $\mathcal U \subseteq \mathcal T$ such that $A = \bigcup \mathcal U$.
+	
+	\begin{proof}
+		As $A$ is open, for any $x \in A$, there exists $\varepsilon _x\in \mathbb R_{> 0}$ such that $B(x, \varepsilon) \subseteq A$. Thus,
+		$$
+		\bigcup_{x \in A} B(x, \varepsilon_x) = A.
+		$$
+	\end{proof}
+\end{corollary}
+
+
+
+\section{Interior}
+%--------------------------------------------
+
+
+\begin{definition}
+	\label{def: interior}
+	
+	Let $\mathbb X = (X, d)$ be a metric space.
+	
+	Given $A \subseteq X$, then the \textit{interior} of $A$, denoted by $A^\circ$, is defined to be the largest open set contained in $A$. Explicitly,
+	$$
+	A^\circ := \left\{ \bigcup \mathcal U: \mathcal U \in \mathcal T \cap 2^A \right\}.
+	$$
+\end{definition}
+
+
+\begin{note}
+	\label{note: interior: notation}
+	
+	Note that, the interior of $A$ is determined by $X$ and $d$ simultaneously. So, even if $\mathbb X_1 = (X, d_1)$ and $\mathbb X_2 = (X, d_2)$ are metric spaces with same set $X$, the interior of a subset $A \subseteq X$ might be different in these two spaces, if $d_1 \ne d_2$.
+	
+	For example, suppose $X = \mathbb R$, and let $d_1$ be a $L^p$ metric on $X$, and let $d_2$ be the discrete metric on $X$. Let $x \in X$, then, the interior of $\{x\}$ in $\mathbb X_1$ is empty, but in $\mathbb X_2$, the interior of $\{x\}$ is $\{x\}$ itself.
+	
+	In this case, for any $A \subseteq X$, we write $A^\circ_{d_1}$, $A^\circ_{\mathbb X_1}$, $\mathrm{Int}_{d_1}A$ or $\mathrm{Int}_{\mathbb X_1}A$ for the interior of $A$ in $\mathbb X_1$. Also, if $\mathcal T_1$ denoted for the topology on $\mathbb X_1$, we also write $A^\circ_{\mathcal T_1}$ or similar.
+\end{note}
+
+
+\begin{lemma}
+	
+\end{lemma}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%
