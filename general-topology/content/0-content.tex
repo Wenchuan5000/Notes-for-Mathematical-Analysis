@@ -3,7 +3,7 @@
 %========================================
 
 
-\section{}
+\section{Basic Definitions}
 %----------------------------------------
 
 
@@ -26,12 +26,96 @@
 		\label{def: open set axiom: closed under finite intersection}
 		For any finite $\mathcal F \subseteq \mathcal T$, $\bigcap \mathcal U \in \mathcal T$;
 	\end{enumerate}
+	
+	The ordered pair $(X, \mathcal T)$ is called a \textit{topological space}.
+\end{definition}
+
+
+\begin{theorem}
+	$\emptyset \in \mathcal T$.
+	
+	\begin{proof}
+		As $\emptyset$ is the subset of any set, $\emptyset \subseteq \mathcal T$. Then, we have
+		$$
+		\bigcup \emptyset = \emptyset.
+		$$
+		By Open Set Axiom \ref{def: open set axiom: closed under arbitrary union}, $\emptyset \in \mathcal T$.
+	\end{proof}
+\end{theorem}
+
+
+\begin{definition}
+	Let $\mathcal T$ and $\mathcal T'$ be topological spaces on $X$. $\mathcal T$ is \textit{coarser} than $\mathcal T'$, or $\mathcal T'$ is \textit{finer} than $\mathcal T$, iff $\mathcal T \subseteq \mathcal T'$.
 \end{definition}
 
 
 \begin{example}
+	Let $\mathbb X = (X, \mathcal T)$ be a topological space, $\mathcal T$ is a \textit{indiscrete topology on $X$}, iff $\mathcal T = \{\emptyset, X \}$. It is the coarsest topology on $X$.
+\end{example}
+\begin{example}
 	Let $X$ be any set, let $\mathcal T = \{ \emptyset, X \}$, then $\mathcal T$ is a \textit{indiscrete topology on $X$}. It is
 \end{example}
+
+
+
+\section{Closed Sets}
+%----------------------------------------
+
+
+\section{Subspaces}
+%----------------------------------------
+
+
+\begin{definition}
+	\label{def: subspace}
+	Let $\mathbb X = (X, \mathcal T)$ be any topological space, and let $A \subseteq X$.
+	
+	The \textit{subspace topology of $A$ induced by $\mathcal T$} is defined as
+	$$
+	\mathcal T_A := \left\{ U \cap A : U \in \mathcal T \right\}.
+	$$
+	
+	The ordered pair $(A, \mathcal T_A)$ is called a \textit{topological subspace}, or just \textit{subspace}, of $\mathbb X$.
+\end{definition}
+
+
+
+\begin{theorem}
+	Let $\mathbb A = (A, \mathcal T_A)$ be a subspace of $\mathbb X$.
+	
+	$\mathcal T_A$ is a topology on $A$; i.e., $\mathbb A$ is a topological space.
+	
+	\begin{proof}
+		As $X \in \mathcal T$, by Definition \ref{def: subspace}, $A = X \cap A \in \mathcal T$. Thus, $\mathcal T_A$ satisfies Open Set Axiom \ref{def: open set axiom: necessary elements}.
+		\qedlm
+		
+		Let $I$ be an indexed set and let $\{ U_i \}_{i \in I} \subseteq \mathcal T_A$. For any $i \in I$, there exists a $U_i' \in \mathcal T$, such that $U_i = U_i' \cap A$. Thus, we have
+		$$
+		\begin{aligned}
+			\bigcup_{i \in I} U_i &= \bigcup_{i \in I} (U_i' \cap A) \\
+			&= A \cap \bigcup_{i \in I} U_i'.
+		\end{aligned}
+		$$
+		
+		As $\mathcal T$ is closed under arbitrary union, $\bigcup_{i \in I} U_i \in \mathcal T$. By Definition \ref{def: subspace},
+		$$
+		A \cap \bigcup_{i \in I} U_i' \in \mathcal T_A.
+		$$
+		
+		Thus, $\mathcal T_A$ satisfies the Open Set Axioms \ref{def: open set axiom: closed under arbitrary union}.
+		\qedlm
+		
+		Let $V, W \in \mathcal T_A$. By Definition \ref{def: subspace}, there are $V', W' \in \mathcal T$ such that
+		$$
+		V \cap W = (V' \cap A) \cap (W' \cap A) = (V' \cap W') \cap A.
+		$$
+		By Open Set Axiom \ref{def: open set axiom: closed under finite intersection}, $V' \cap W' \in \mathcal T$, thus $(V' \cap W') \cap A \in \mathcal T_A$. By induction, $\mathcal T_A$ is closed under finite intersection.
+		\qedlm
+		
+		As $\mathcal T_A$ satisfies the Open Set Axioms, $\mathcal T_A$ is a topology on $A$, and $\mathbb A$ is a topological space.
+	\end{proof}
+\end{theorem}
+
 
 
 
